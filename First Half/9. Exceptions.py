@@ -12,13 +12,11 @@ if __name__ == "__main__":
     # You do not have to specify what you are catching
     except:
         print("Failure")
-    
     try:
         exception_type_func()
     # We can print e, this will only print the string error
     except e:
         print(str(e))
-    
     try:
         exception_type_func()
     # We can specify the type, and print the traceback

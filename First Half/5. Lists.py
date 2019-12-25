@@ -23,6 +23,10 @@ if __name__ == "__main__":
     b = list[0:5] # Take sublist of 0-5 indices not including 5
     c = list[:-1] # Will return everything up to the last index not including it
     d = list[0:6:2] # Will take up untill the 6th idx not including in jumps of 2
+    # We can also easily split and join strings to lists and back
+    some_delimited_string = "a,b,c,d"
+    delimited_list = some_delimited_string.split(',')
+    rejoined_string = ','.join(delimited_list)
     # Last note on mutability of different types of lists:
     # The following table describes each type's properties
     #           Ordered         Unordered
