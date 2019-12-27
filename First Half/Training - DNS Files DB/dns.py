@@ -1,4 +1,4 @@
-import dns_io as di
+import dns_operations as do
 import dns_record as dr
 import os
 import sys
@@ -34,7 +34,7 @@ def remove_ip(records):
     return filter(lambda record: record.get_ip() != ip, records)
 
 def save_hosts(records, path):
-    di.store_dns_file(records, path)
+    do.DNSOperations.store_dns_file(records, path)
 
 if __name__ == "__main__":
     records = []
@@ -45,10 +45,9 @@ if __name__ == "__main__":
         print("2. Create a new hosts file")
         print("3. Exit")
         cmd = raw_input()
-        print(type(cmd))
         if cmd == '1':
             path = raw_input("Please write the file path:\n")
-            records = di.load_dns_file(path)
+            records = do.DNSOperations.load_dns_file(path)
             break
         elif cmd == '2':
             path = raw_input("Please write where to output the hosts file:\n")
