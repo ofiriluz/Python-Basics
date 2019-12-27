@@ -23,8 +23,12 @@ def func_with_help():
 # The input list will be manipulated
 # Since this is not a base type, it will be passed by reference to this class
 def list_manipulated_func(some_list):
+    print(some_list)
+    some_list.remove(0)
     for idx in range(len(some_list)):
         some_list[idx] *= 5
+    some_list.append(5)
+    some_list.append(0)
 
 if __name__ == "__main__":
     print(a(5,3))
@@ -40,7 +44,7 @@ if __name__ == "__main__":
     # The help will print the docs in the """"""
     print(help(func_with_help))
 
-    some_list = [4,5,5]
+    some_list = [0,4,5,5]
     list_manipulated_func(some_list)
     # This will create a copy of some_list which will die at the end of the function
     # The copy will have a different id
