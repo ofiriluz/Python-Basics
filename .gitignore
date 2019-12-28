@@ -1,0 +1,3 @@
+*.pyc
+records.db
+.vscode

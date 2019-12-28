@@ -1,7 +1,7 @@
 import dns_operations as do
 import dns_record as dr
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 
 def touch(fname):
     if os.path.exists(fname):
@@ -23,12 +23,14 @@ records_db = load_hosts_db(records_db_path)
 
 @app.route('/dns_records', methods=['GET'])
 def dns_records():
+    global records_db
     return jsonify({
         "records": [record.as_dict() for record in records_db]
     })
 
-@app.route('/dns_record/<str:ip>', methods=['GET'])
+@app.route('/dns_record/<ip>', methods=['GET'])
 def dns_record(ip):
+    global records_db
     return jsonify({
         "records": map(lambda record: record.as_dict(),
                         filter(lambda record: record.get_ip() == ip, records_db))
@@ -36,6 +38,7 @@ def dns_record(ip):
 
 @app.route('/add_dns_record', methods=['POST'])
 def add_dns_record():
+    global records_db
     if not request.json or 'ip' not in request.json or 'hosts' not in request.json:
         abort(400)
     records_db.append(dr.DNSRecord(request.json['ip'], request.json['hosts']))
@@ -44,6 +47,7 @@ def add_dns_record():
 
 @app.route('/add_dns_record_hosts', methods=['POST'])
 def add_dns_record_hosts():
+    global records_db
     if not request.json or 'ip' not in request.json or 'hosts' not in request.json:
         abort(400)
     result_message = 'ip not found'
@@ -54,14 +58,24 @@ def add_dns_record_hosts():
     save_hosts_db(records_db, records_db_path)
     return jsonify({"result": result_message})
 
-@app.route('/remove_dns_record/<str:ip>', methods=['DELETE'])
+@app.route('/remove_dns_record/<ip>', methods=['DELETE'])
 def remove_dns_record(ip):
+    global records_db
     records_db = filter(lambda record: record.get_ip() != ip, records_db)
+    save_hosts_db(records_db, records_db_path)
+    return jsonify({"result": "success"})
+
+@app.route('/remove_dns_record_host/<host>', methods=['DELETE'])
+def remove_dns_record_host(host):
+    global records_db
+    for record in records_db:
+        record.remove_host(host)
     save_hosts_db(records_db, records_db_path)
     return jsonify({"result": "success"})
 
 @app.route('/clear_dns_records', methods=['DELETE'])
 def clear_dns_records():
+    global records_db
     records_db = []
     save_hosts_db(records_db, records_db_path)
     return jsonify({"result": "success"})

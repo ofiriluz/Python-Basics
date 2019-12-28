@@ -53,7 +53,7 @@ class DNSRecord:
         # Will learn more about in the next parts
         self.__hosts = filter(lambda h: h != host, self.__hosts)
 
-    def as_dict():
+    def as_dict(self):
         return {
             "ip": self.__ip,
             "hosts": self.__hosts
