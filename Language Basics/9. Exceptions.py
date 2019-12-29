@@ -21,8 +21,7 @@ if __name__ == "__main__":
         exception_type_func()
     # We can specify the type, and print the traceback
     except Exception as e:
-        print(e.with_traceback())
-        # Note that we can use the traceback library to do the same
+        # We can use traceback to get the trace log
         import traceback
-        print(traceback.format_exception(e))
+        print(traceback.format_exc())
 

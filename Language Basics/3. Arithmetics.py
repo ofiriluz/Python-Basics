@@ -9,7 +9,7 @@ if __name__ == "__main__":
     # Besides the well known arithmetic operations
     # Python adds new operators
     e = (a+3)**2 # Power of two
-    f = 9.0//2.0 # Floor division, results in 1
+    f = 9.0//2.0 # Floor division, results in 4
 
     # Boolean operators are simillar aswell
     g = 3 > 5 and 5 == 2 or a != b
